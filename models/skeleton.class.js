@@ -1,3 +1,0 @@
-class Skeleton extends MovableObject{
-    
-}

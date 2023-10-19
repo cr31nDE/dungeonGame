@@ -1,21 +1,18 @@
 let canvas;
-let ctx;
-let spriteWidth;
-let totalFrames = 6;
-let srcX = 0;
-let srcY = 0;
 
 
-let world = new World;
+let world;
+
+
+
 
 
 function init() {
     canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d');
-    console.log(world.character);
-    // character.src = 'img/charakters/Fire vizard/Walk.png';
-    // spriteWidth = character.width / totalFrames;
-    // spriteHeight = character.height;
+    world = new World(canvas);
+   
+    console.log(world);
+    
     // resizeImage();
 
     // setTimeout(() => {
