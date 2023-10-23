@@ -1,6 +1,6 @@
 class MovableObject {
     x = 100;
-    y = 100;
+    y = 390;
     img;
     height = 150;
     spriteWidth;

@@ -4,16 +4,53 @@ class World {
         new SkeletonArcher,
         new SkeletonFighter,
         new SkeletonFighter,
+    ];
+    backgroundObjects = [
+        new BackgroundObject('img/background/Dungeon_Level_1.png'),
+        new BackgroundObject('img/background/Dungeon_Level_2.png'),
+        new BackgroundObject('img/background/Dungeon_Level_3.png'),
+        new BackgroundObject('img/background/Dungeon_Level_4.png'),
+        new BackgroundObject('img/background/Dungeon_Level_5.png'),
+        new BackgroundObject('img/background/Dungeon_Level_6.png'),
     ]
+
+    canvas;
     ctx;
-    constructor(canvas){
+    constructor(canvas) {
         this.ctx = canvas.getContext('2d');
+        this.canvas = canvas;
         this.draw();
     }
 
     draw() {
-        this.character.spriteWidth = this.character.img.width / this.character.totalFrames;
-        this.character.spriteHeight = this.character.img.height;
-        this.ctx.drawImage(this.character.img, this.character.srcX, this.character.srcY, this.character.spriteWidth, this.character.spriteHeight, 0, 0, this.character.spriteWidth, this.character.spriteHeight );
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.addBackground(this.backgroundObjects);
+        this.addToMap(this.character);
+        this.addObjectsToMap(this.enemies);
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
     }
+
+    addBackground(bgr){
+        bgr.forEach(bgr => {
+            this.ctx.drawImage(bgr.img, bgr.x, bgr.y, 1080, 720);
+        });
+    }
+
+    addObjectsToMap(objects){
+        objects.forEach(o => {
+            this.addToMap(o);
+        })
+    }
+
+    addToMap(mo){
+        mo.spriteWidth = mo.img.width / mo.totalFrames;
+        this.ctx.drawImage(mo.img, mo.srcX, mo.srcY, mo.spriteWidth, mo.img.height, mo.x, mo.y, mo.spriteWidth, mo.img.height)
+    }
+
+
+
+
 }
