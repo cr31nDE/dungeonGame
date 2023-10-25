@@ -6,12 +6,12 @@ class World {
         new SkeletonFighter,
     ];
     backgroundObjects = [
-        new BackgroundObject('img/background/Dungeon_Level_1.png'),
-        new BackgroundObject('img/background/Dungeon_Level_2.png'),
-        new BackgroundObject('img/background/Dungeon_Level_3.png'),
-        new BackgroundObject('img/background/Dungeon_Level_4.png'),
-        new BackgroundObject('img/background/Dungeon_Level_5.png'),
-        new BackgroundObject('img/background/Dungeon_Level_6.png'),
+        new BackgroundObject('img/background/Dungeon_Level_1.png', 0, 0),
+        new BackgroundObject('img/background/Dungeon_Level_2.png', 0, 1080),
+        new BackgroundObject('img/background/Dungeon_Level_3.png', 0, 2160),
+        new BackgroundObject('img/background/Dungeon_Level_4.png', 0, 3240),
+        new BackgroundObject('img/background/Dungeon_Level_5.png', 0, 4320),
+        new BackgroundObject('img/background/Dungeon_Level_6.png', 0, 5400),
     ]
 
     canvas;
@@ -46,8 +46,7 @@ class World {
     }
 
     addToMap(mo){
-        mo.spriteWidth = mo.img.width / mo.totalFrames;
-        this.ctx.drawImage(mo.img, mo.srcX, mo.srcY, mo.spriteWidth, mo.img.height, mo.x, mo.y, mo.spriteWidth, mo.img.height)
+        this.ctx.drawImage(mo.img, mo.srcX, mo.srcY, mo.spriteWidth, mo.img.height, mo.x, mo.y, mo.spriteWidth * 1.5, mo.img.height * 1.5)
     }
 
 

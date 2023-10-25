@@ -66,7 +66,6 @@ function resizeImage() {
 //     currentFrame = currentFrame % totalFrames;
 //     srcX = currentFrame * spriteWidth
 //     ctx.save();
-//     resizeImage();
 //     ctx.drawImage(character, srcX, srcY, spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight);
 //     ctx.restore();
 //     framesDrawn++;
