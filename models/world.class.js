@@ -4,6 +4,7 @@ class World {
         new SkeletonArcher,
         new SkeletonFighter,
         new SkeletonFighter,
+        new Werewolf
     ];
     backgroundObjects = [
         new BackgroundObject('img/background/Dungeon_Level_1.png', 0, 0),

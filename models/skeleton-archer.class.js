@@ -5,6 +5,7 @@ class SkeletonArcher extends MovableObject{
         this.x = 400;
         this.findFrame();
         this.animate();
+        this.otherDirection = true;
     }
 
     animate() {

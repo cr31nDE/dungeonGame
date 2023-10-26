@@ -12,21 +12,22 @@ class Character extends MovableObject {
 
 
     animate() {
-        setInterval(()=>{
-            if (this.world.keyboard.RIGHT) {
-                this.x += 3;
+        const targetX = 340;
+        setInterval(() => {
+            if (this.world.keyboard.RIGHT && this.x < (1080 * 6) - 200) {
+                this.x += 30;
                 this.otherDirection = false;
             }
-            if (this.world.keyboard.LEFT) {
-                this.x -= 3;
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.x -= 30;
                 this.otherDirection = true;
-
             }
-            
-                this.world.camera_x = -this.x + 100;
-            
-            
-        }, 1000 / 60)
+    
+            if (this.x >= targetX && this.x <= 5740) {
+                this.world.camera_x = -(this.x - targetX);
+            } 
+        }, 1000 / 60);
+    
 
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
