@@ -10,6 +10,7 @@ class MovableObject {
     totalFrames;
     srcX = 0;
     srcY = 0;
+    otherDirection = false;
 
     
 
