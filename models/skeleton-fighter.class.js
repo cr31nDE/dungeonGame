@@ -2,7 +2,7 @@ class SkeletonFighter extends MovableObject{
     constructor(){
         super().loadImg('img/charakters/Skeleton_Warrior/Walk.png');
         this.totalFrames = 7;
-        this.x = 200 + Math.random() * 500;
+        this.x = 700;
         this.findFrame();
         this.animate();
         this.otherDirection = true;
@@ -10,7 +10,7 @@ class SkeletonFighter extends MovableObject{
 
     animate() {
         setInterval(() => {
-            this.playAnimation(this.totalFrames);
+            this.playAnimation(this.totalFrames, 10);
         }, 1000 / 60)
     }
 

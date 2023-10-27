@@ -24,10 +24,22 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
-    setWorld(){
+    setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions(){
+        setInterval(()=>{
+            this.enemies.forEach((enemy) =>{
+               if (this.character.isColliding(enemy)) {
+                    console.log('collision with enemy')
+               } 
+            });
+
+        }, 100);
     }
 
     draw() {
@@ -43,30 +55,41 @@ class World {
         });
     }
 
-    addBackground(bgr){
+    addBackground(bgr) {
         bgr.forEach(bgr => {
             this.ctx.drawImage(bgr.img, bgr.x, bgr.y, 1080, 720);
         });
     }
 
-    addObjectsToMap(objects){
+    addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         })
     }
 
-    addToMap(mo){
+    addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.spriteWidth + 50, 0);
-            this.ctx.scale(-1, 1);
-            mo.x = mo.x * -1;
+           this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.srcX, mo.srcY, mo.spriteWidth, mo.img.height, mo.x, mo.y, mo.spriteWidth * 1.5, mo.img.height * 1.5);
-        if (mo.otherDirection){
-            mo.x = mo.x * -1;
-            this.ctx.restore();
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
+        
+       
+        if (mo.otherDirection) {
+            this.flipImageBack(mo);
         }
+    }
+
+    flipImage(mo){
+        this.ctx.save();
+        this.ctx.translate(mo.spriteWidth + 50, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+    flipImageBack(mo){
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 
 

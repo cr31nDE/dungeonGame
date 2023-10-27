@@ -3,6 +3,7 @@ class Character extends MovableObject {
     runingAnimation = 'img/charakters/Fire vizard/Run.png';
     jumpAnimation = 'img/charakters/Fire vizard/Jump.png';
     idleAnimation = 'img/charakters/Fire vizard/Idle.png';
+    targetX = 340;
     constructor() {
 
         super().loadImg('img/charakters/Fire vizard/Idle.png');
@@ -13,23 +14,22 @@ class Character extends MovableObject {
 
 
     animate() {
-        const targetX = 340;
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < (1080 * 6) - 200) {
-                this.x += 7;
+                this.moveRight();
                 this.otherDirection = false;
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
-                this.x -= 7;
-                this.otherDirection = true;
+               this.moveLeft();
+               this.otherDirection = true;
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround() || this.world.keyboard.UP && !this.isAboveGround()) {
-                this.speedY = 22;
+                this.jump();
             }
 
-            if (this.x >= targetX && this.x <= 5740) {
-                this.world.camera_x = -(this.x - targetX);
+            if (this.x >= this.targetX && this.x <= 5740) {
+               this.moveCamera(this.targetX);
             } 
         }, 1000 / 60);
     
@@ -37,11 +37,11 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT && !this.isAboveGround() || this.world.keyboard.LEFT && !this.isAboveGround()) {
                 this.loadImg(this.runingAnimation);
-                this.playAnimation(8);   
+                this.playAnimation(8, 10);   
             }
             else if (!this.isAboveGround()) {
                 this.loadImg(this.idleAnimation)
-                this.playAnimation(7);
+                this.playAnimation(7, 10);
             }
         }, 1000 / 60)
 
@@ -49,7 +49,7 @@ class Character extends MovableObject {
             if (this.isAboveGround() || this.speedY > 0) {             
                 this.loadImg(this.jumpAnimation);
                 this.applyGravity();
-                this.playJumpAnimation(4, 6);
+                this.playJumpAnimation(4, 6, 12);
             }
             else{
                 this.start = 0;
@@ -59,10 +59,6 @@ class Character extends MovableObject {
     }
 
 
-
-    jump() {
-
-    }
 
 
 }
