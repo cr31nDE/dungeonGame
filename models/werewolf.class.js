@@ -9,7 +9,7 @@ class Werewolf extends MovableObject{
     }
     animate() {
         setInterval(() => {
-           this.playAnimation();
+           this.playAnimation(this.totalFrames);
         }, 1000 / 60)
     }
 

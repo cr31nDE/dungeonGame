@@ -33,8 +33,6 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.ctx.translate(this.camera_x, 0);
-
-
         this.addBackground(this.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);

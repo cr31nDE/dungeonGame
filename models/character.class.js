@@ -1,13 +1,14 @@
 class Character extends MovableObject {
     world;
+    runingAnimation = 'img/charakters/Fire vizard/Run.png';
+    jumpAnimation = 'img/charakters/Fire vizard/Jump.png';
+    idleAnimation = 'img/charakters/Fire vizard/Idle.png';
     constructor() {
 
-        super().loadImg('img/charakters/Fire vizard/Walk.png');
-        this.totalFrames = 6;
-
+        super().loadImg('img/charakters/Fire vizard/Idle.png');
+        this.totalFrames = 7;
         this.findFrame();
-        this.animate();
-
+        this.animate(); 
     }
 
 
@@ -15,14 +16,18 @@ class Character extends MovableObject {
         const targetX = 340;
         setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < (1080 * 6) - 200) {
-                this.x += 30;
+                this.x += 7;
                 this.otherDirection = false;
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
-                this.x -= 30;
+                this.x -= 7;
                 this.otherDirection = true;
             }
-    
+
+            if (this.world.keyboard.SPACE && !this.isAboveGround() || this.world.keyboard.UP && !this.isAboveGround()) {
+                this.speedY = 22;
+            }
+
             if (this.x >= targetX && this.x <= 5740) {
                 this.world.camera_x = -(this.x - targetX);
             } 
@@ -30,18 +35,29 @@ class Character extends MovableObject {
     
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.currentFrame = this.currentFrame % this.totalFrames;
-                this.srcX = this.currentFrame * this.spriteWidth;
-                this.framesDrawn++;
-                if (this.framesDrawn >= 8) {
-                    this.currentFrame++;
-                    this.framesDrawn = 0;
-
-                }
+            if (this.world.keyboard.RIGHT && !this.isAboveGround() || this.world.keyboard.LEFT && !this.isAboveGround()) {
+                this.loadImg(this.runingAnimation);
+                this.playAnimation(8);   
             }
-        }, 15)
+            else if (!this.isAboveGround()) {
+                this.loadImg(this.idleAnimation)
+                this.playAnimation(7);
+            }
+        }, 1000 / 60)
+
+        setInterval(() =>{
+            if (this.isAboveGround() || this.speedY > 0) {             
+                this.loadImg(this.jumpAnimation);
+                this.applyGravity();
+                this.playJumpAnimation(4, 6);
+            }
+            else{
+                this.start = 0;
+            }
+        }, 1000 / 30 );
+    
     }
+
 
 
     jump() {
