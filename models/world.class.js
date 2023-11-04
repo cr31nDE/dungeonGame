@@ -25,18 +25,31 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
+        this.checkFlameJet();
+        
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    checkCollisions(){
-        setInterval(()=>{
-            this.enemies.forEach((enemy) =>{
-               if (this.character.isColliding(enemy)) {
+    checkCollisions() {
+        setInterval(() => {
+            this.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
                     console.log('collision with enemy')
-               } 
+                }
+            });
+
+        }, 100);
+    }
+
+    checkFlameJet() {
+        setInterval(() => {
+            this.enemies.forEach((enemy) => {
+                if (this.character.isBurning(enemy) && this.keyboard.F) {
+                    console.log('enemy burns')
+                }
             });
 
         }, 100);
@@ -46,8 +59,8 @@ class World {
         this.ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.ctx.translate(this.camera_x, 0);
         this.addBackground(this.backgroundObjects);
-        this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
+        this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
         requestAnimationFrame(function () {
@@ -69,25 +82,25 @@ class World {
 
     addToMap(mo) {
         if (mo.otherDirection) {
-           this.flipImage(mo);
+            this.flipImage(mo);
         }
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
-        
-       
+
+
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
 
-    flipImage(mo){
+    flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.spriteWidth + 50, 0);
         this.ctx.scale(-1, 1);
         mo.x = mo.x * -1;
     }
 
-    flipImageBack(mo){
+    flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
