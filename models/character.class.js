@@ -7,7 +7,6 @@ class Character extends MovableObject {
     targetX = 340;
     flameJetStart = 0;
     constructor() {
-
         super().loadImg('img/charakters/Fire vizard/Idle.png');
         this.y = 323;
         this.totalFrames = 7;
@@ -52,7 +51,7 @@ class Character extends MovableObject {
                 this.loadImg(this.idleAnimation)
                 this.playAnimation(7, 10);
             }
-        }, 1000 / 60)
+        }, 1000 / 60);
 
 
         setInterval(() => {

@@ -1,5 +1,6 @@
-class SkeletonFighter extends MovableObject{ 
-    constructor(){
+class SkeletonFighter extends MovableObject {
+    isDeadAnimation = 'img/charakters/Skeleton_Warrior/Dead.png'
+    constructor() {
         super().loadImg('img/charakters/Skeleton_Warrior/Walk.png');
         this.totalFrames = 7;
         this.x = 700;
@@ -12,12 +13,24 @@ class SkeletonFighter extends MovableObject{
         setInterval(() => {
             this.playAnimation(this.totalFrames, 10);
         }, 1000 / 60)
+
+
+
+        setInterval(() => {
+            if (world.character.isBurning(this)) {
+                console.log('dead')
+            }
+        }, 1000 / 60);
     }
 
-    jump(){
 
-
+    isDead() {
+        setInterval(() => {
+            this.loadImg(this.isDeadAnimation)
+            this.playDeadAnimation(4, 10);
+        }, 1000/60)
     }
-
 
 }
+
+

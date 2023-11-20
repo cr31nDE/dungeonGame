@@ -25,8 +25,7 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
-        this.checkFlameJet();
-        
+        this.checkFlameJet();    
     }
 
     setWorld() {
@@ -48,7 +47,7 @@ class World {
         setInterval(() => {
             this.enemies.forEach((enemy) => {
                 if (this.character.isBurning(enemy) && this.keyboard.F) {
-                    console.log('enemy burns')
+                    enemy.isDead();
                 }
             });
 

@@ -18,7 +18,6 @@ class MovableObject {
 
     draw(ctx) {
         ctx.drawImage(this.img, this.srcX, this.srcY, this.spriteWidth, this.img.height, this.x, this.y, this.spriteWidth * 1.5, this.img.height * 1.5);
-
     }
 
     isColliding(obj) {
@@ -32,7 +31,7 @@ class MovableObject {
         const objWidth = obj.spriteWidth * 0.08; // Aktuelle Breite des Objekts
         const objHeight = obj.img.height; // Aktuelle Höhe des Objekts
 
-        
+
 
         // Überprüfe die Kollision zwischen dem aktuellen Frame des Characters und des Objekts
         return (
@@ -49,12 +48,12 @@ class MovableObject {
         if (this.otherDirection) {
             addX = -35;
         }
-        else{
+        else {
             addX = 60
         }
         const thisX = this.x + addX; // Aktuelle X-Position des Character
         const thisY = this.y * 1.3; // Aktuelle Y-Position des Characters
-        const thisWidth =  130; // Aktuelle Breite des Characters
+        const thisWidth = 130; // Aktuelle Breite des Characters
         const thisHeight = 50; // Aktuelle Höhe des Characters
 
         const objX = obj.x + 70; // Aktuelle X-Position des Objekts
@@ -101,12 +100,17 @@ class MovableObject {
         ctx.strokeStyle = 'blue';
         ctx.rect(this.x + addX, this.y * addY, 130, 50);
         ctx.stroke();
-
-
     }
 
-    setCharacterEvenWithGround(){
-        if (this.y > 500 && this.x < 3365) {
+    setCharacterEvenWithGround() {
+        let x;
+        if (this.otherDirection) {
+            x = 3340;
+        }
+        else{
+            x = 3365;
+        }
+        if (this.y > 500 && this.x < x) {
             this.y = 509;
         }
     }
@@ -125,14 +129,44 @@ class MovableObject {
 
 
     isAboveGround() {
-        if (this.x > 3365 && this.x < 3400) {
-            return this.y < 700;
+        if (this.otherDirection) {
+            if (this.x > 3340 && this.x < 3390) {
+                return this.y < 700;
+            }
+            if (this.x > 2824 && this.x < 3365 || (this.x > 2824 && this.x > 3390)) {
+                return this.y <= 500;
+            }
+            return this.y < 323;
         }
-        if (this.x > 2824 && this.x < 3365 || (this.x > 2824 && this.x > 3325)) {
-            return this.y <= 500;
+        else {
+            if (this.x > 3365 && this.x < 3390) {
+                return this.y < 700;
+            }
+            if (this.x > 2824 && this.x < 3365 || (this.x > 2824 && this.x > 3390)) {
+                return this.y <= 500;
+            }
+            return this.y < 323;
         }
-        return this.y < 323;
     };
+
+    removeFrame(ctx, addX, addY, width, height) {
+        // Löschen des Rahmens
+        ctx.clearRect(this.x + addX, this.y * addY, width, height);
+    }
+    
+    
+
+    checkDead() {
+        console.log('Test');
+        const addX = 75;
+        const addY = 1.28;
+        const width = this.spriteWidth * 0.28;
+        const height = this.img.height;
+        const ctx = world.ctx;
+        this.removeFrame(ctx, addX, addY, width, height);
+    }
+    
+    
 
     playAnimation(totalFrames, frameCounter) {
         this.currentFrame = this.currentFrame % totalFrames;
@@ -165,6 +199,15 @@ class MovableObject {
     }
 
 
+    playDeadAnimation(maxFrame, frameCounter) {
+        if (this.currentFrame >= maxFrame) {
+            this.currentFrame = maxFrame - 1; // Auf das letzte Bild setzen
+        }
+        this.changeFrames(frameCounter);
+    }
+    
+
+
     playJumpAnimation(minFrame, maxFrame, frameCounter) {
         if (this.start == 0) {
             this.currentFrame = minFrame;
@@ -188,18 +231,18 @@ class MovableObject {
     }
 
     moveRight() {
-        this.x += 30;
+        this.x += 7;
         console.log(this.x)
-        
+
     }
 
     moveLeft() {
         this.x -= 7;
-
+        console.log(this.x)
     }
 
     attack() {
-       
+
     }
 
 
