@@ -73,8 +73,8 @@ class MovableObject {
 
     drawFrame(ctx) {
         if (this instanceof Character) {
-            this.drawSpecificFrame(ctx, 60, 1.28, 30, 1);
-            this.drawFlameJetFrame(ctx, 60, 1.3,);
+            this.drawSpecificFrame(ctx, 60, 95, 30, 0.75);
+            this.drawFlameJetFrame(ctx, 60, 100,);
         }
         if (this instanceof SkeletonFighter || this instanceof SkeletonArcher || this instanceof Werewolf) {
             ctx.beginPath();
@@ -90,7 +90,7 @@ class MovableObject {
         ctx.beginPath();
         ctx.lineWidth = '4';
         ctx.strokeStyle = 'blue';
-        ctx.rect(this.x + addX, this.y * addY, Width, this.img.height * addSpriteHeight);
+        ctx.rect(this.x + addX, this.y + addY, Width, this.img.height * addSpriteHeight);
         ctx.stroke();
     }
 
@@ -98,7 +98,7 @@ class MovableObject {
         ctx.beginPath();
         ctx.lineWidth = '4';
         ctx.strokeStyle = 'blue';
-        ctx.rect(this.x + addX, this.y * addY, 130, 50);
+        ctx.rect(this.x + addX, this.y + addY, 130, 50);
         ctx.stroke();
     }
 
