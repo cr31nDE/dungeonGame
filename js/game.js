@@ -6,7 +6,7 @@ let keyboard = new Keyboard();
 
 
 
-async function init() {
+function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
    
