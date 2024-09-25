@@ -3,9 +3,11 @@ class Character extends MovableObject {
     runingAnimation = 'img/charakters/Fire vizard/Run.png';
     jumpAnimation = 'img/charakters/Fire vizard/Jump.png';
     idleAnimation = 'img/charakters/Fire vizard/Idle.png';
-    standardAttackAnimation = 'img/charakters/Fire vizard/Flame_jet.png'
+    standardAttackAnimation = 'img/charakters/Fire vizard/Flame_jet.png';
+    pullUpAnimation = 'img/charakters/Fire vizard/Pull_up.png';
     targetX = 340;
     flameJetStart = 0;
+    isClimbing = false;
     constructor() {
         super().loadImg('img/charakters/Fire vizard/Idle.png');
         this.y = 323;
@@ -21,7 +23,7 @@ class Character extends MovableObject {
                 this.attack();
             }
             else {
-                if (this.world.keyboard.RIGHT && this.x < (1080 * 6) - 200&& this.y <= 323 || this.world.keyboard.RIGHT && this.x < 4510 && this.y <= 509)   {
+                if (this.world.keyboard.RIGHT && this.x < (1080 * 6) - 200 && this.y <= 323 || this.world.keyboard.RIGHT && this.x < 4510 && this.y <= 509) {
                     this.moveRight();
                     this.otherDirection = false;
                 }
@@ -30,16 +32,32 @@ class Character extends MovableObject {
                     this.otherDirection = true;
                 }
 
-                if (this.world.keyboard.SPACE && !this.isAboveGround() || this.world.keyboard.UP && !this.isAboveGround()) {
+                if (this.world.keyboard.SPACE && !this.isAboveGround() && !this.isInClimbPosition() || this.world.keyboard.UP && !this.isAboveGround() && !this.isInClimbPosition()) {
                     this.jump();
                 }
 
                 if (this.x >= this.targetX && this.x <= 5740) {
                     this.moveCamera(this.targetX);
                 }
+
             }
 
         }, 1000 / 60);
+
+
+        setInterval(() => {
+            if (this.world.keyboard.SPACE && this.isInClimbPosition()) {
+                this.isClimbing = true;
+                if (this.isClimbing) {
+                    this.loadImg(this.pullUpAnimation);
+                    this.playAnimation(5, 12);
+                }
+
+            }
+
+
+        }, 1000 / 60);
+
 
 
         setInterval(() => {
@@ -47,7 +65,7 @@ class Character extends MovableObject {
                 this.loadImg(this.runingAnimation);
                 this.playAnimation(8, 10);
             }
-            else if (!this.isAboveGround()) {
+            else if (!this.isAboveGround() && !this.isInClimbPosition()) {
                 this.loadImg(this.idleAnimation)
                 this.playAnimation(7, 10);
             }

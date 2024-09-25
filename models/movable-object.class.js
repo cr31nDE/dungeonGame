@@ -107,7 +107,7 @@ class MovableObject {
         if (this.otherDirection) {
             x = 3340;
         }
-        else{
+        else {
             x = 3365;
         }
         if (this.y > 500 && this.x < x) {
@@ -153,11 +153,14 @@ class MovableObject {
         // Löschen des Rahmens
         ctx.clearRect(this.x + addX, this.y * addY, width, height);
     }
-    
-    
+
+    isInClimbPosition() {
+        if (this.x === 2809 && this.otherDirection) {
+            return true; 
+        }
+    }
 
     checkDead() {
-        console.log('Test');
         const addX = 75;
         const addY = 1.28;
         const width = this.spriteWidth * 0.28;
@@ -165,8 +168,8 @@ class MovableObject {
         const ctx = world.ctx;
         this.removeFrame(ctx, addX, addY, width, height);
     }
-    
-    
+
+
 
     playAnimation(totalFrames, frameCounter) {
         this.currentFrame = this.currentFrame % totalFrames;
@@ -183,6 +186,8 @@ class MovableObject {
             this.framesDrawn = 0;
         }
     }
+
+
     jump() {
         this.speedY = 22;
     }
@@ -205,8 +210,17 @@ class MovableObject {
         }
         this.changeFrames(frameCounter);
     }
-    
 
+    playPullUpAnimation( maxFrame, frameCounter) {
+        if (this.start == 0) {
+            this.currentFrame = 0;
+            this.start++;
+        }
+        if (this.currentFrame === maxFrame) {
+            this.currentFrame = maxFrame ;
+        }
+        this.changeFrames(frameCounter);
+    }
 
     playJumpAnimation(minFrame, maxFrame, frameCounter) {
         if (this.start == 0) {
